@@ -85,10 +85,16 @@ section { padding:130px 0; border-top:1px solid var(--line-soft); }
 .traits { border-top:1px solid var(--line); align-self:start; }
 .trait { padding:15px 0; border-bottom:1px solid var(--line); display:flex; gap:15px; font-family:var(--mono); font-size:11px; color:var(--muted); }
 .trait::before { content:"→"; color:var(--blue); }
-.project { position:relative; display:grid; grid-template-columns:130px 1fr 250px; gap:35px; padding:42px 0; border-top:1px solid var(--line); transition:padding-left .3s ease, background .3s ease; }
+.project { position:relative; display:grid; grid-template-columns:100px 260px 1fr 220px; gap:35px; padding:42px 0; border-top:1px solid var(--line); transition:padding-left .3s ease, background .3s ease; }
+.project.no-shot { grid-template-columns:100px 1fr 220px; }
 .project:last-child { border-bottom:1px solid var(--line); }
 .project:hover { padding-left:18px; }
 .project-index { font-family:var(--mono); font-size:11px; color:var(--blue); }
+.project-shot { position:relative; aspect-ratio:4/3; border:1px solid var(--line); background:#0d131a; overflow:hidden; }
+.project-shot img { width:100%; height:100%; display:block; object-fit:cover; filter:saturate(.9) contrast(1.03); }
+.project-shot .ph { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; font-family:var(--mono); font-size:9px; color:var(--muted-2); letter-spacing:.06em; line-height:1.7; padding:10px; border:1px dashed var(--line); }
+.project-shot.logo { background:#f4f6f9; }
+.project-shot.logo img { object-fit:contain; padding:28px; filter:none; }
 .project-main h3 { margin:0; font-family:var(--display); font-size:28px; letter-spacing:-.035em; }
 .project-main p { max-width:720px; margin:14px 0 0; color:var(--muted); font-size:14px; }
 .project-side { align-self:start; }
@@ -96,6 +102,8 @@ section { padding:130px 0; border-top:1px solid var(--line-soft); }
 .tags { display:flex; flex-wrap:wrap; gap:6px; }
 .tag { padding:5px 8px; border:1px solid var(--line); font-family:var(--mono); font-size:9px; color:#9da9b6; }
 .project-result { margin-top:18px; font-family:var(--mono); font-size:11px; color:var(--blue-light); }
+.project-link { display:inline-flex; align-items:center; gap:6px; margin-top:14px; font-family:var(--mono); font-size:10px; letter-spacing:.05em; color:var(--blue-light); text-decoration:none; }
+.project-link:hover { color:white; }
 .featured { margin-top:100px; padding:55px; position:relative; background: radial-gradient(circle at 75% 30%, rgba(77,124,255,.10), transparent 35%), #0a0f15; border:1px solid var(--line); overflow:hidden; }
 .featured::after { content:"AUTONOMOUS SYSTEM"; position:absolute; right:-20px; top:40px; font-family:var(--display); font-size:80px; font-weight:700; letter-spacing:-.06em; color:rgba(255,255,255,.018); pointer-events:none; }
 .featured-top { display:flex; justify-content:space-between; align-items:flex-start; gap:30px; }
@@ -115,9 +123,14 @@ section { padding:130px 0; border-top:1px solid var(--line-soft); }
 .chip { padding:6px 9px; border:1px solid var(--line); color:#aab4bf; font-family:var(--mono); font-size:10px; }
 .recognition { border-top:1px solid var(--line); }
 .recognition-item { display:grid; grid-template-columns:120px 1fr; gap:30px; padding:25px 0; border-bottom:1px solid var(--line); }
+.recognition-item.with-shots { grid-template-columns:120px 1fr auto; align-items:center; }
 .recognition-type { font-family:var(--mono); font-size:10px; color:var(--blue); }
 .recognition-title { font-family:var(--display); font-size:18px; }
 .recognition-detail { margin-top:4px; font-family:var(--mono); font-size:10px; color:var(--muted-2); }
+.recognition-shots { display:flex; gap:12px; flex-wrap:nowrap; }
+.recognition-shot { position:relative; width:200px; height:190px; border:1px solid var(--line); background:#0d131a; overflow:hidden; flex-shrink:0; }
+.recognition-shot img { width:100%; height:100%; object-fit:contain; display:block; filter:saturate(.9) contrast(1.03); }
+.recognition-shot .ph { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; font-family:var(--mono); font-size:8px; color:var(--muted-2); letter-spacing:.04em; line-height:1.4; padding:4px; border:1px dashed var(--line); }
 .contact { position:relative; padding:160px 0; overflow:hidden; }
 .contact::before { content:""; position:absolute; width:700px; height:700px; right:-200px; top:-200px; border-radius:50%; background: radial-gradient(circle, rgba(55,104,255,.18), transparent 65%); pointer-events:none; }
 .contact-content { position:relative; z-index:2; }
@@ -156,6 +169,8 @@ footer { padding:25px 0; border-top:1px solid var(--line); }
     .about-grid { grid-template-columns:1fr; gap:55px; }
     .stack { grid-template-columns:repeat(2,1fr); }
     .project { grid-template-columns:80px 1fr; }
+    .project.no-shot { grid-template-columns:80px 1fr; }
+    .project-shot { grid-column:1/-1; aspect-ratio:16/9; }
     .project-side { grid-column:2; }
     .pipeline { grid-template-columns:repeat(3,1fr); }
     .pipeline-node:nth-child(3)::after { display:none; }
@@ -170,6 +185,8 @@ footer { padding:25px 0; border-top:1px solid var(--line); }
     .section-heading { grid-template-columns:1fr; gap:10px; margin-bottom:45px; }
     .section-number { padding:0; }
     .project { grid-template-columns:1fr; gap:14px; padding:30px 0; }
+    .project.no-shot { grid-template-columns:1fr; }
+    .project-shot { grid-column:auto; aspect-ratio:16/9; }
     .project-side { grid-column:auto; }
     .featured { padding:30px 20px; }
     .featured-top { flex-direction:column; }
@@ -177,6 +194,9 @@ footer { padding:25px 0; border-top:1px solid var(--line); }
     .pipeline-node:nth-child(3)::after, .pipeline-node:nth-child(5)::after { display:none; }
     .stack { grid-template-columns:1fr; }
     .recognition-item { grid-template-columns:1fr; gap:7px; }
+    .recognition-item.with-shots { grid-template-columns:1fr; }
+    .recognition-shots { margin-top:10px; }
+    .recognition-shot { width:130px; height:120px; }
     .contact { padding:110px 0; }
     .contact h2 { font-size:clamp(55px,17vw,100px); }
 }
@@ -207,11 +227,11 @@ footer { padding:25px 0; border-top:1px solid var(--line); }
 
 <header class="hero"><div class="wrap"><div class="hero-grid">
     <div class="hero-copy reveal">
-        <div class="hero-status"><span class="status-dot"></span>OPEN TO SYSTEMS ENGINEERING ROLES</div>
+        <div class="hero-status"><span class="status-dot"></span>OPEN TO SYSTEMS ENGINEERING AND ROBOTICS ROLES</div>
         <span class="eyebrow">Robotics · Automated Driving</span>
         <h1>SHRIKANT<span class="outline">WAGHULE</span></h1>
         <div class="hero-role">Systems Engineer</div>
-        <p class="hero-description">I love owning and turning complex engineering systems into <strong>clean,easy & testable interfaces.</strong> From automotive HMI and requirements engineering to ROS2, Autoware and autonomous driving systems.</p>
+        <p class="hero-description">I love owning and turning complex engineering systems into <strong>clean,easy & testable interfaces & solutions.</strong> From automotive HMI and requirements engineering to ROS2, Autoware and autonomous driving systems.</p>
         <div class="hero-actions">
             <a href="#work" class="button primary">EXPLORE MY WORK →</a>
             <a href="#contact" class="button">GET IN TOUCH</a>
@@ -229,7 +249,7 @@ footer { padding:25px 0; border-top:1px solid var(--line); }
 </div>
 <div class="metrics reveal">
     <div class="metric"><div class="metric-number">2.5<span>+</span></div><div class="metric-label">YEARS<br>AUTOMOTIVE ENGINEERING</div></div>
-    <div class="metric"><div class="metric-number">1.4<span>M</span></div><div class="metric-label">WORDS VALIDATED<br>ACROSS 36 LANGUAGES</div></div>
+    <div class="metric"><div class="metric-number">1.4<span>M</span></div><div class="metric-label">WORDS VALIDATED WITH 80% FASTER<br>& 100% PRE-RELEASE VERIFCATION ACROSS 36 LANGUAGES</div></div>
     <div class="metric"><div class="metric-number">50<span>%</span></div><div class="metric-label">HMI RELEASE COST<br>REDUCTION</div></div>
     <div class="metric"><div class="metric-number">01</div><div class="metric-label">GRANTED<br>INDIAN PATENT</div></div>
 </div>
@@ -258,32 +278,41 @@ footer { padding:25px 0; border-top:1px solid var(--line); }
     </div>
 </div></section>
 
+<!-- ============ SELECTED WORK images ============
+     To add a photo: put the image file next to index.html and
+     replace the  <div class="ph">...</div>  line inside a
+     .project-shot with:   <img src="project-01.jpg" alt=""> -->
 <section id="work"><div class="wrap">
     <div class="section-heading reveal">
         <div class="section-number">02 / SELECTED WORK</div>
         <div><h2>Engineering<br>in practice.</h2><p>Projects where systems thinking, reverse engineering and measurable outcomes mattered more than the title.</p></div>
     </div>
-    <article class="project reveal">
+    <article class="project no-shot reveal">
         <div class="project-index">01</div>
         <div class="project-main"><h3>Teleoperated Autonomous Driving Platform</h3><p>Co-leading the software-stack workpackage in a 6-person team. Authored the interface architecture document covering cross-container ROS2 topics, QoS profiles and coordinate-frame conversion specifications.</p><div class="project-result">SYSTEM-LEVEL INTERFACE ARCHITECTURE</div></div>
         <div class="project-side"><div class="project-year">2026 — PRESENT</div><div class="tags"><span class="tag">ROS2 JAZZY</span><span class="tag">AUTOWARE</span><span class="tag">CARLA</span><span class="tag">DOCKER</span><span class="tag">F1TENTH</span></div></div>
     </article>
     <article class="project reveal">
         <div class="project-index">02</div>
+        <div class="project-shot logo"><img src="project-02.jpg" alt="Daimler Truck"></div>
         <div class="project-main"><h3>HMI Localization QA Tool</h3><p>Built a Python tool to check HMI strings against UI bounding boxes across approximately 1.4 million words and 36 languages, catching overflow issues before release.</p><div class="project-result">RELEASE COST REDUCED BY 50%</div></div>
         <div class="project-side"><div class="project-year">2022 — 2024</div><div class="tags"><span class="tag">PYTHON</span><span class="tag">HMI</span><span class="tag">AUTOMOTIVE</span></div></div>
     </article>
     <article class="project reveal">
         <div class="project-index">03</div>
+        <div class="project-shot logo"><img src="project-03.jpg" alt="FUSO"></div>
         <div class="project-main"><h3>FUSO Warning Database Migration</h3><p>When IBM DOORS was discontinued, the warning database was at risk. Self-taught SQL,within a month migrated the database to MS Access and reverse-engineered the export format with no additional process updates and costs.</p><div class="project-result">EXPORT TIME REDUCED BY 80%</div></div>
         <div class="project-side"><div class="project-year">2022 — 2024</div><div class="tags"><span class="tag">SQL</span><span class="tag">MS ACCESS</span><span class="tag">DOORS</span></div></div>
     </article>
     <article class="project reveal">
         <div class="project-index">04</div>
-        <div class="project-main"><h3>Multi-Bit Hand Drill Mechanism</h3><p>Designed and fabricated a multi-bit holder enabling quick manual interchange of six drill bits, integrated into a 12W rechargeable hand drill.</p><div class="project-result">INDIAN PATENT NO. 477335</div></div>
+        <div class="project-shot"><img src="project-04.jpg" alt="Multi-Bit Hand Drill Mechanism"></div>
+        <div class="project-main"><h3>Multi-Bit Hand Drill Mechanism</h3><p>Designed and fabricated a multi-bit holder enabling quick manual interchange of six drill bits, integrated into a 12W rechargeable hand drill.</p><div class="project-result">INDIAN PATENT NO. 477335</div>
+        <!-- Add the real record/PDF URL, then uncomment:
+        <a class="project-link" href="PATENT_URL" target="_blank" rel="noopener">VIEW PATENT ↗</a> --></div>
         <div class="project-side"><div class="project-year">2019</div><div class="tags"><span class="tag">PTC CREO</span><span class="tag">FABRICATION</span><span class="tag">PATENT</span></div></div>
     </article>
-    <article class="project reveal">
+    <article class="project no-shot reveal">
         <div class="project-index">05</div>
         <div class="project-main"><h3>Integrated ATV–Drone with Gesture Control</h3><p>Designed and modeled an integrated ATV–drone in PTC Creo focused on aerodynamics and structural efficiency, integrating sensors, controllers and gesture-recognition modules.</p></div>
         <div class="project-side"><div class="project-year">2021</div><div class="tags"><span class="tag">PTC CREO</span><span class="tag">GESTURE CONTROL</span></div></div>
@@ -329,9 +358,24 @@ footer { padding:25px 0; border-top:1px solid var(--line); }
     </div>
     <div class="recognition reveal">
         <div class="recognition-item"><div class="recognition-type">AWARD</div><div><div class="recognition-title">Best Process Innovation Award</div><div class="recognition-detail">Daimler Truck Innovation Centre</div></div></div>
-        <div class="recognition-item"><div class="recognition-type">PATENT</div><div><div class="recognition-title">Indian Patent No. 477335 — Multi-bit Hand Drill</div><div class="recognition-detail">Granted 2023</div></div></div>
-        <div class="recognition-item"><div class="recognition-type">COPYRIGHT</div><div><div class="recognition-title">Three Indian copyrights registered</div><div class="recognition-detail">Diary no. 2564 / 2570 / 2559 — 2021-CO/L</div></div></div>
-        <div class="recognition-item"><div class="recognition-type">LEAD</div><div><div class="recognition-title">Vice-Captain, Team Volta — DD Robocon</div><div class="recognition-detail">Led mechanical design across a 30-member interdisciplinary team</div></div></div>
+        <div class="recognition-item"><div class="recognition-type">PATENT</div><div><div class="recognition-title">Indian Patent No. 477335 — Multi-bit Hand Drill</div><div class="recognition-detail">Granted 2023</div>
+        <!-- Add the real record/PDF URL, then uncomment:
+        <a class="project-link" href="PATENT_URL" target="_blank" rel="noopener">VIEW RECORD ↗</a> --></div></div>
+        <div class="recognition-item"><div class="recognition-type">COPYRIGHT</div><div><div class="recognition-title">Three Indian copyrights registered</div><div class="recognition-detail">Diary no. 2564 / 2570 / 2559 — 2021-CO/L</div>
+        <!-- Add the real registry URL, then uncomment:
+        <a class="project-link" href="COPYRIGHT_URL" target="_blank" rel="noopener">VIEW RECORD ↗</a> --></div></div>
+        <div class="recognition-item"><div class="recognition-type">PRESS</div><div><div class="recognition-title">Featured in The Times of India</div><div class="recognition-detail">Article covering the project, with photo</div>
+        <!-- Add the real article URL, then uncomment:
+        <a class="project-link" href="TOI_ARTICLE_URL" target="_blank" rel="noopener">READ ARTICLE ↗</a> --></div></div>
+        <div class="recognition-item with-shots">
+            <div class="recognition-type">LEAD</div>
+            <div><div class="recognition-title">Vice-Captain, Team Volta — DD Robocon</div><div class="recognition-detail">Led mechanical design across a 30-member interdisciplinary team</div></div>
+            <div class="recognition-shots">
+                <div class="recognition-shot"><img src="robocon-01.jpg" alt=""></div>
+                <div class="recognition-shot"><img src="robocon-02.jpg" alt=""></div>
+                <div class="recognition-shot"><img src="robocon-03.jpg" alt=""></div>
+            </div>
+        </div>
     </div>
 </div></section>
 
